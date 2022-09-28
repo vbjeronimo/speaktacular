@@ -1,13 +1,16 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
-
 const PORT = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-  res.send('Connected...')
-})
+const { requestLogger } = require('./middleware/logger');
 
-app.listen(PORT, () => {
-  console.log('Listening on port 5000...');
-})
+// Middleware
+app.use(express.json());
 
+app.use(requestLogger);
+
+// Routes
+app.use('/api/practice-text', require('./routes/api/practiceText'));
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

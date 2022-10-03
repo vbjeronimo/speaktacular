@@ -22,6 +22,8 @@ app.use(requestLogger);
 // Routes
 app.use('/api/practice-texts', require('./routes/api/practiceTexts'));
 
+app.use('/register', require('./routes/register'));
+
 mongoose.connection.once('open', () => {
   app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 });

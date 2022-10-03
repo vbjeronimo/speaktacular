@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { logger } = require('../middleware/logger');
+const handleError = require('../utils/handleError');
 const PracticeText = require('../models/PracticeText');
 
 const getAllPracticeTexts = async (req, res) => {
@@ -21,11 +21,6 @@ const getRandomPracticeText = async (req, res) => {
 
     return res.json(randomPracticeText);
   })
-}
-
-const handleError = (err, res) => {
-  logger.log('error', err.message);
-  res.sendStatus(400).json({ "error": err.message });
 }
 
 module.exports = {

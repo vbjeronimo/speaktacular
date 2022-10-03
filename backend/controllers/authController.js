@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 
 const handleError = require('../utils/handleError');
 const User = require('../models/User');
-const { create } = require('../models/PracticeText');
 
 const handleLogin = async (req, res) => {
   const { emailAddress, password } = req.body;
@@ -52,4 +51,4 @@ const createAuthTokensForUser = (user) => {
   return tokens;
 }
 
-module.exports = { handleLogin}
+module.exports = { handleLogin }

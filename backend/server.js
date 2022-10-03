@@ -14,12 +14,13 @@ connectDB();
 
 // Middleware
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(requestLogger);
 
 // Routes
-app.use('/api/practice-text', require('./routes/api/practiceText'));
+app.use('/api/practice-texts', require('./routes/api/practiceTexts'));
 
 mongoose.connection.once('open', () => {
   app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

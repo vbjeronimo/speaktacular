@@ -1,15 +1,25 @@
 const mongoose = require('mongoose');
-const { Schema, Model } = mongoose;
+const { Schema } = mongoose;
+
+const supportedLanguages = [
+  "english"
+];
 
 const practiceTextSchema = new Schema({
-  type: {
-    type: String,
-    required: true
-  },
   text: {
     type: String,
-    required:true
+    required:true,
+    minLength: 1
+  },
+  author: String,
+  language: {
+    type: String,
+    default: "english",
+    validate: {
+      validator: value => supportedLanguages.indexOf(value) !== -1,
+      message: props => `${props.value} is not in the list of supported languages.`
+    }
   }
 });
 
-module.exports = Model('PracticeText', practiceTextSchema);
+module.exports = mongoose.model('practice_text', practiceTextSchema);

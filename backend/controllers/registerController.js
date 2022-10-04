@@ -7,11 +7,11 @@ const handleNewUser = async (req, res) => {
   try {
     const { emailAddress, username, password } = req.body;
 
-    let user = await User.findOne({ emailAddress: emailAddress });
+    let user = await User.findOne({ emailAddress });
     if (user) {
       return res.status(409).json({ "message": `An account already exists with the email address "${emailAddress}"` })
     }
-    user = await User.findOne({ username: username });
+    user = await User.findOne({ username });
     if (user) {
       return res.status(409).json({ "message": `An account already exists with username "${username}"` })
     }

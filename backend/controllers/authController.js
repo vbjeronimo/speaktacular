@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
-const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const handleError = require('../utils/handleError');
+const jwtCookieOptions = require('../config/jwtCookieOptions');
 const User = require('../models/User');
 
 const handleLogin = async (req, res) => {
@@ -12,7 +12,7 @@ const handleLogin = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ emailAddress: emailAddress });
+    const user = await User.findOne({ emailAddress });
     if (!user) {
       return res.status(400).json({ "message": `User with email address ${emailAddress} not found` });
     }
@@ -26,7 +26,7 @@ const handleLogin = async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie('jwt', refreshToken, jwtCookieOptions);
     return res.json(accessToken);
 
   } catch (err) {
@@ -40,7 +40,7 @@ const createAuthTokensForUser = (user) => {
   tokens.accessToken = jwt.sign(
     { "username": user.username },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '5m' }
+    { expiresIn: '15m' }
   );
   tokens.refreshToken = jwt.sign(
     { "username": user.username },

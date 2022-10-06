@@ -3,6 +3,7 @@ import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-po
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 import PronunciationPracticeResult from '../js/pronunciationPracticeResult';
+import styles from '../css/Home.module.css';
 import UserContext from '../contexts/userContext';
 
 const APP_ID = process.env.REACT_APP_SPEECHLY_APP_ID;
@@ -12,6 +13,7 @@ SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
 const Home = () => {
   const [practiceText, setPracticeText] = useState('');
+  const [practiceStarted, setPracticeStarted] = useState(false);
   const user = useContext(UserContext);
   const practiceResult = useRef({});
   const effectRan = useRef(false);
@@ -59,10 +61,12 @@ const Home = () => {
   }
 
   function handleStartPractice() {
+    setPracticeStarted(true);
     SpeechRecognition.startListening();
   }
 
   function handleStopPractice() {
+    setPracticeStarted(false);
     SpeechRecognition.stopListening();
     practiceResult.current = new PronunciationPracticeResult(practiceText, transcript);
     console.log(practiceResult.current);
@@ -70,14 +74,16 @@ const Home = () => {
   }
 
   return (
-    <main>
-      <textarea
+    <main className={styles.PracticeArea}>
+      <textarea 
         value={practiceText}
         onChange={(e) => { handlePracticeTextChange(e.target.value) }}
         cols={30}
         rows={10} />
-      <button onClick={handleStartPractice}>Start</button>
-      <button onClick={handleStopPractice}>Stop</button>
+    {practiceStarted
+    ? <button onClick={handleStopPractice} className={styles.StopButton}>Stop</button>
+    : <button onClick={handleStartPractice} className={styles.StartButton}>Start</button>
+    }
     </main>
   );
 }

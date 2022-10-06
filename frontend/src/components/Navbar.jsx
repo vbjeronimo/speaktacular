@@ -1,15 +1,29 @@
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+import styles from '../css/Navbar.module.css';
+
+const Navbar = ({ user }) => {
   return (
-    <nav>
-      <Link to='/'><span>Speak</span>tacular</Link>
+    <nav className={styles.Navbar}>
+      <Link to='/' className={styles.Logo}><span>Speak</span>tacular</Link>
       <ul>
-        <Link to='/'>Statistics</Link>
+        <Link to='/' className={styles.Link}>About</Link>
+        <Link to='/' className={styles.Link}>Contact Us</Link>
+        <Link to='/' className={styles.Link}>Statistics</Link>
       </ul>
       <ul>
-        <Link to='/'>Register</Link>
-        <Link to='/'>Login</Link>
+        {user.isAuthenticated 
+          ?
+          <>
+            <Link to='/' className={styles.Link}>Account</Link>
+            <Link to='/' className={styles.Link}>Logout</Link>
+          </>
+          :
+          <>
+            <Link to='/' className={styles.Link}>Register</Link>
+            <Link to='/' className={styles.Link}>Login</Link>
+          </>
+        }
       </ul>
     </nav>
   );

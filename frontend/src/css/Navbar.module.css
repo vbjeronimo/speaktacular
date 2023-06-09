@@ -1,0 +1,31 @@
+.Navbar {
+  background-color: #2E86E0;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+}
+
+.Logo {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #DDD;
+}
+
+.Logo span {
+  color: #FFF;
+}
+
+.Logo:hover {
+  opacity: 0.80;
+}
+
+.Link {
+  font-size: 1.25rem;
+  margin: 1.75rem;
+}
+
+.Link:hover {
+  opacity: 0.80;
+}
